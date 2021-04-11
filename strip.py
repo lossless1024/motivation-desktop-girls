@@ -1,10 +1,9 @@
 import sys
 import cv2
 import math
-from PyQt5.QtGui import QPainter, QPen, QImage, QPixmap
+from PyQt5.QtGui import QPainter, QImage, QPixmap
 from PyQt5.QtWidgets import QMainWindow, QApplication
 from PyQt5.QtCore import Qt
-import numpy as np
 
 
 class Girl(QMainWindow):
