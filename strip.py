@@ -26,7 +26,7 @@ class Girl(QMainWindow):
         self.setGeometry(width*2-w, height, w, h)
         self.setStyleSheet("background:transparent")
         self.setAttribute(Qt.WA_TranslucentBackground)
-        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint)
+        self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.WindowDoesNotAcceptFocus | Qt.Tool)
         self.show()
         self.playVideo(vidcap, geo)
         sys.exit(0)
