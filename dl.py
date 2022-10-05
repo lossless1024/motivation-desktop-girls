@@ -1,29 +1,39 @@
+import os
 import requests
 from multiprocessing import Pool
 from itertools import product
 
+baseurl = 'https://affiliates.istripper.com/tools/poppings/'
 
-hosts = [
-#	'https://erowall.com/tf558550ef6e/',
-	'https://zoomgirls.net/t00a0b00821f/',
-	'http://girlwallpaper.pro/t08ece370cf3/',
-	'https://www.adultwalls.com/td480c6bc2c7/',
-	'https://nakedgirlwallpaper.pro/totempoping/t354881a7582/',
-]
+with open('iStripper-shows.csv') as f:
+	l = [x.split(';') for x in f.read().split('\n')]
 
-def dl(*args):
-	host, n = args
-	for ch in [chr(c) for c in range(ord('a'), ord('f')+1)]:
-		for i in range(0, 2000):
-			url = '{:s}{:04d}_{:1d}.mp4'.format(ch, i, n)
-			resp = requests.get(host + url)
-			if resp.status_code == 200:
-				print(host + url)
-				with open('videos/' + url, 'wb') as f:
-					f.write(resp.content)
-
+go = True
 if __name__ == '__main__':
-	for host in hosts:
-		with Pool(10) as p:
-			p.starmap(dl, product([host], range(10)))
-
+	for s in l:
+		id = s[0]
+		name = s[3].replace(' ', '').replace('"', '')
+		
+		if id == 'c0521':
+			go = True
+		if go == False:
+			continue
+		
+		for i in range(1, 100):
+		
+			fname = id + '_{:1d}.mp4'.format(i)
+			#fname = id + '_{:02d}.mp4'.format(i)
+			#fname = id + '_' + name + '_{:1d}.mp4'.format(i)
+			#fname = id + '_' + name + '_{:02d}.mp4'.format(i)
+			
+			print(fname, end=' ')
+			if not os.path.exists('videos/' + fname):
+				resp = requests.get(baseurl + fname)
+				if resp.status_code == 200:
+					print('DL', end='')
+					with open('videos/' + fname, 'wb') as f:
+						f.write(resp.content)
+				elif resp.status_code == 404:
+					print()
+					break
+			print()
